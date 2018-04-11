@@ -3,36 +3,8 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>Register</title>
-        <load href="__PUBLIC__/Css/Home/reg.css" />
-        <load href="__PUBLIC__/Js/jquery.js"/>
-        <load href="__PUBLIC__/Css/basic.css" />
-        
-        <script>
-            $(function(){
-                var error=new Array();
-                $('input[name="username"]').blur(function(){
-                    var username=$(this).val();
-                    $.get('__URL__/checkUser',{'username':username},function(data){
-                        if(data=='error'){
-                            error['username']=1;
-                            $('input[name="username"]').after('<p id="umessage" style="color:red">该用户名已经注册</p>');
-                        }else{
-                            error['username']=0;
-                            $('#umessage').remove();
-                        }
-                    });
-                });
 
-                //提交表单
-                $('img.register').click(function(){
-                    if(error['username']==1){
-                        return false;
-                    }else{
-                        $('form[name="myForm"]').submit();
-                    }
-                });
-            });
-        </script>
+        
     </head>
     <body>
         <form action='__URL__/doReg' method='post' name='myForm'>
@@ -40,11 +12,7 @@
             密　　码：<input type='password' name='password'/><br/>
             确认密码：<input type='password' name='repassword'/><br/>
 			邮箱：<input type = 'text' name = 'email'>
-            验 证 码：<input type='text' name='code'/>
-                       <img src='__MODULE__/Public/code' onclick="this.src=this.src+'?'+Math.random()"/>
-                      <br/>
-            <img src='__PUBLIC__/Images/register.gif' class='register'/>
-            <img src='__PUBLIC__/Images/reset.gif' class='reset'/>
+
         </form>
     </body>
 </html>

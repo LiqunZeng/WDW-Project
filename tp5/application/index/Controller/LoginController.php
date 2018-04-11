@@ -45,5 +45,8 @@ class LoginController extends Controller {
             $this->error('incorrect username or password, please check.');
         }
     }
+	
+	
+	
 }
 ?>
