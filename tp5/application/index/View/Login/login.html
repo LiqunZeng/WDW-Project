@@ -6,11 +6,12 @@
 
 </head>
 <body>
-    <form action='__URL__/Login' method='post' name='myForm'>
+    <form action='dirname(dirname(dirname(_FILE_)))/Controller/LoginController.php' method='post' name='myForm'>
+		Login Information:<br>
         username：<input type='text' name='username' class = 'content'/><br/>
         password：<input type='password' name='password' class = 'content'/><br/>
-        <input type 'submit' value = "Submit" name = "submit" class = "content">
-		<input type 'reset' value = "Reset" class = "content">
+        <input type "submit" value = "Submit" name = "submit">
+		<input type "reset" value = "Reset">
 		
 	</form>        
 </body>
