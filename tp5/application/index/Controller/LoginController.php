@@ -9,23 +9,13 @@ class LoginController extends Controller {
         $this->display();
     }
 
-    public function doLogin(){
+    public function login(){
         //接受值
         //判断用户在数据库中是否存在
         //存在 允许登录
         //不存在 显示错误信息
         $username=$_POST['username'];
         $password=$_POST['password'];
-        $code=$_POST['code'];
-        
-        function check_verify($code, $id = ''){
-            $verify = new \Think\Verify();
-            return $verify->check($code, $id);
-        }
-
-        if(!check_verify($code,$id = '')){
-            $this->error('验证码输入错误！');
-        }
 
         $user=M('User');
         $where['username']=$username;
@@ -34,9 +24,12 @@ class LoginController extends Controller {
         if($arr){
             $_SESSION['username']=$username;
             $_SESSION['id']=$arr['id'];
-            $this->success('用户登录成功',U('Index/index'));
-        }else{
-            $this->error('该用户不存在');
+            $this->success('Success',U('Index/index'));
+        
+			setcookie($username, $password, time()+3600*24)
+		
+		}else{
+            $this->error('incorrect username or password, please check.');
         }
     }
 }

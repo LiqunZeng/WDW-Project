@@ -19,17 +19,17 @@ class RegisterController extends Controller {
         if($count){
 			$error = true;
 			$nameCheck = "username exists.";
-            echo 'username has been used.';
+            echo 'error';
         }
 		else if(empty($username)){
 			$error = true;
 			$usernameCheck = "username cannot be empty."
-			echo 'username cannot be empty';
+			echo 'error';
 		}
 		else if(!preg_match("/^[a-z\d]*$/i",$username)){
 			$error = true;
 			$usernameCheck = "username can only be letters and numbers."
-			echo 'invalid username.'
+			echo 'error'
 		}
 		else{
 			$userPassword = md5(I('password'));
@@ -40,19 +40,19 @@ class RegisterController extends Controller {
 			}else if (strlen($userPassword)<6){
 				$error = true;
 				$passwordCheck = "password too short."
-				echo 'password length must greater or equal than 6'
+				echo 'error'
 			}
 			
 			$userEmail = I('email');	
 			if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
 				$error = true;
 				$emailCheck = "Please enter valid email address.";
-            
+				echo 'error'
         }
 				
     }
     //注册
-    public function doReg(){
+    public function register(){
     
         $user=D('User');
         if(!$user->create()){
