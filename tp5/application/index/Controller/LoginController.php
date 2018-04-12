@@ -25,7 +25,7 @@ class LoginController extends Controller {
 			$where['password']=$password;
 			
 			// 执行查询
-			$arr=$user->field('id')->where($where)->find();
+			$arr=$user->field('username, password')->where($where)->find();
 			//$user->query("select *from users where uname='$username' and pwd='$password'"); 
 		}
 		
