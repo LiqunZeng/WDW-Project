@@ -6,7 +6,7 @@
 class UserModel{
 
 	private $username;
-	
+		
 	function UserModel($username){
 		$this -> username = $username;
 	}
@@ -20,6 +20,10 @@ class UserModel{
 	}
 	
 
+	
+	
+	
+	
 }
 
 ?>
