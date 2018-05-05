@@ -1,8 +1,8 @@
 <?php
 
 class AutoLoad {
-    public $c;
-    public $a;
+    public $c;//controller
+    public $a;//action
 
     public function main()
     {

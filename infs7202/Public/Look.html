@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>Wedding Stylish website</title>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- Custom styles for this template -->
+   
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="css/style.css">
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar MISS one navbar-deafult-->
+    <nav class="navbar navbar-fixed-top container-fluid" id="mainNav">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="img/logo2.png" class="img-responsive" alt="logo image" id="brand-image"></a> 
+          <!--<a class="navbar-brand" href="#">Wedding Stylish</a> 
+          <img src="img/Logo.png" class="img-responsive" alt="Responsive image" id="navImg">
+          -->
+        </div>
+        <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="active"><a href="#">Home</a></li>
+             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="login.html">Login</a></li>
+            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+<div class="container">
+  <div class="row">
+
+    <section class="content">
+      <h1>Table Filter</h1>
+      <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="pull-right">
+              <div class="btn-group">
+                <button type="button" class="btn btn-success btn-filter" data-target="pagado">Pagado</button>
+                <button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Pendiente</button>
+                <button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Cancelado</button>
+                <button type="button" class="btn btn-default btn-filter" data-target="all">All</button>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="table table-filter">
+                <tbody>
+                  <tr data-status="pagado">
+                    <td>
+                      <div class="ckbox">
+                        <input type="checkbox" id="checkbox1">
+                        <label for="checkbox1"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="star">
+                        <i class="glyphicon glyphicon-star"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="media">
+                        <a href="#" class="pull-left">
+                          <img src="img/look.jpg" class="media-photo">
+                        </a>
+                        <div class="media-body">
+                          <span class="media-meta pull-right">20 apr 2018</span>
+                          <h4 class="title">
+                            User Ciba
+                            <span class="pull-right pagado">(Pagado)</span>
+                          </h4>
+                          <p class="summary">This one worth 1000 Yuan, only one produc for the each user</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-status="pendiente">
+                    <td>
+                      <div class="ckbox">
+                        <input type="checkbox" id="checkbox3">
+                        <label for="checkbox3"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="star">
+                        <i class="glyphicon glyphicon-star"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="media">
+                        <a href="#" class="pull-left">
+                          <img src="img/look.jpg" class="media-photo">
+                        </a>
+                        <div class="media-body">
+                          <span class="media-meta pull-right">20 apr 2018</span>
+                          <h4 class="title">
+                            User Ciba
+                            <span class="pull-right pendiente">(Pendiente)</span>
+                          </h4>
+                          <p class="summary">This one worth 1000 Yuan, only one produc for the each user</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-status="cancelado">
+                    <td>
+                      <div class="ckbox">
+                        <input type="checkbox" id="checkbox2">
+                        <label for="checkbox2"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="star">
+                        <i class="glyphicon glyphicon-star"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="media">
+                        <a href="#" class="pull-left">
+                          <img src="img/look.jpg" class="media-photo">
+                        </a>
+                        <div class="media-body">
+                          <span class="media-meta pull-right">20 apr 2018</span>
+                          <h4 class="title">
+                            User Ciba
+                            <span class="pull-right cancelado">(Cancelado)</span>
+                          </h4>
+                          <p class="summary">This one worth 1000 Yuan, only one produc for the each user</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-status="pagado" class="selected">
+                    <td>
+                      <div class="ckbox">
+                        <input type="checkbox" id="checkbox4" checked>
+                        <label for="checkbox4"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="star star-checked">
+                        <i class="glyphicon glyphicon-star"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="media">
+                        <a href="#" class="pull-left">
+                          <img src="img/look.jpg" class="media-photo">
+                        </a>
+                        <div class="media-body">
+                          <span class="media-meta pull-right">20 apr 2018</span>
+                          <h4 class="title">
+                            User Ciba
+                            <span class="pull-right pagado">(Pagado)</span>
+                          </h4>
+                          <p class="summary">This one worth 1000 Yuan, only one produc for the each user</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-status="pendiente">
+                    <td>
+                      <div class="ckbox">
+                        <input type="checkbox" id="checkbox5">
+                        <label for="checkbox5"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="star">
+                        <i class="glyphicon glyphicon-star"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="media">
+                        <a href="#" class="pull-left">
+                          <img src="img/look.jpg" class="media-photo">
+                        </a>
+                        <div class="media-body">
+                          <span class="media-meta pull-right">20 apr 2018</span>
+                          <h4 class="title">
+                            User Ciba
+                            <span class="pull-right pendiente">(Pendiente)</span>
+                          </h4>
+                          <p class="summary">This one worth 1000 Yuan, only one produc for the each user</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+  </div>
+</div>
+
+<div class="seperator"></div>
+<!--          Contact part             -->
+    <section class="text-center" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center contact">
+            <h2 class="section-heading" style="font-family: 'Playball', cursive; font-weight: bold; font-size: xx-large;">Let's Get In Touch!</h2>
+            <hr class="my-4">
+            <p class="mb-5">Do you have any advice or any required, please sent to this email. Ready to start your next project with us? That's great! Can also Give us a call or send us an email and we will get back to you as soon as possible!</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 ml-auto text-center contact">
+            <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+            <p>789-456-123</p>
+          </div>
+          <div class="col-lg-4 mr-auto text-center contact">
+            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+            <p>
+              <a href="mailto:your-email@your-domain.com">weddingStylish.feedback@outlook.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <div class="footer">
+    &copy; Infs group: Yaxin, liqun, LiuChen
+</div>
+    </section>
+
+<!-- Bootstrap core JavaScript Placed at the end of the document to let the pages load faster  -->
+<script src="js/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+
+  $('.star').on('click', function () {
+      $(this).toggleClass('star-checked');
+    });
+
+    $('.ckbox label').on('click', function () {
+      $(this).parents('tr').toggleClass('selected');
+    });
+
+    $('.btn-filter').on('click', function () {
+      var $target = $(this).data('target');
+      if ($target != 'all') {
+        $('.table tr').css('display', 'none');
+        $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+      } else {
+        $('.table tr').css('display', 'none').fadeIn('slow');
+      }
+    });
+
+ });
+
+
+
+</script>
+  </body>
+</html>

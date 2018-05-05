@@ -44,7 +44,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="login.html">Login</a></li>
-            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
+            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>   <!--加上post>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
