@@ -1,7 +1,6 @@
 <?php
 
 $name=$_POST[username];
-echo $name;
 $password=$_POST[password];
 $passwordJson = json_encode($password);
 
@@ -33,8 +32,13 @@ $userJson = json_encode($user);
       ?>;
       var password = <?php echo $passwordJson ?>;
       console.log(password);
-      if(user[0][1] === password){
+	  if(user.length==0){
+		  alert("Invalid username, please try again");
+		  location.href='../View/login.html';
+	  }
+      else if(user[0][1] === password){
         alert("success!");
+		location.href='../View/Look.html';
       }else{
         alert("fail!");
         location.href='../View/login.html';
