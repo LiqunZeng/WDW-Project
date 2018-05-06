@@ -27,9 +27,6 @@ class AutoLoad {
         }else{
             $controller->index();
         }
-
-
-
     }
 }
 

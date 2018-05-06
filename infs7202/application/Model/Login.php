@@ -8,7 +8,7 @@ $dbms='mysql';
 $host='localhost';
 $dbName='infs3202';
 $user='root';
-$pass='whfywtsdnh';
+$pass='';
 $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
@@ -17,7 +17,7 @@ $st = $dbh->prepare("SELECT * FROM `user_info` WHERE `username`='$name'");
 $st->execute();
 $user = $st->fetchAll();
 $userJson = json_encode($user);
-  ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -42,7 +42,6 @@ $userJson = json_encode($user);
       }else{
         alert("fail!");
         location.href='../View/login.html';
-
       }
     </script>
   </body>
