@@ -36,14 +36,14 @@
         <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav ml-auto">
             <li class="active"><a href="index.html">Home</a></li>
-             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
+             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="application/View/Look.html">Look</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="Blog.html">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="login.html">Login</a></li>
-            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
+            <li><a href="#">Login</a></li>
+            <li class="active"><a href="application/View/Register.html">Register</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,7 +52,7 @@
 <div class="register text-center fieldset col-centered">
   <div class="row">
     <div class="form-group col-md-10 form1"><!-- here is 10 -->
-      <form role="form" class="form-horizontal" data-toggle="validator">
+      <form role="form" class="form-horizontal" data-toggle="validator" action = "../Model/Login.php" method = "POST">
         <div class="row">
           <fieldset class="col-md-offset-5"><!--  5 is the center-->
             <legend class="col-md-8" style="font-family: 'Playball', cursive; font-weight: bold; font-size: xx-large;">Login</legend>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                   <div class="col-md-10 col-md-offset-1">
                     <label class="control-label">UserName</label>
-                      <input type="text" class="form-control" name="frist name" placeholder="Name" required="">
+                      <input type="text" class="form-control" name="username" placeholder="Name" required="">
                   </div>
                 </div>
 
@@ -77,7 +77,7 @@
                     <button type="submit" class="btn btn-primary btn-lg" name="submit">Login</button>
                     <br>
                     <br>
-                    <a class="js-scroll-trigger" name="regisetr" href="TwoTypesOfRegister.html">Don't have an account?</a>
+                    <a class="js-scroll-trigger" name="regisetr" href="Register.html">Don't have an account?</a>
                   </div>
                 </div>
             </div>
