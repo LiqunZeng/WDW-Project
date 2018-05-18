@@ -28,9 +28,9 @@ class LoginController extends Controller
 			//checkPassword($table,$one,$key, $value)
 			//$sql = "SELECT $one FROM $table WHERE $key = '$value'";
 			if ($checkpass == $password){
-				alert("success!");
+				echo "success!";
 			}else{
-				alert("username or password incorrect, please try again!")
+				echo "username or password incorrect, please try again!";
 			}
 		}
 	}

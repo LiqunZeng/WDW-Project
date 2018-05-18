@@ -24,11 +24,11 @@ class RegisterController extends Controller
 		
 		//var $user = echo $userJson;
 		if($checkExits==0){
-			alert("success!");
+			echo "success!";
 			$value = $RegisterModel->registerUser($username,$password,$email,$phone,$gender);
 			//location.href='?c=index&a=index';
 		}else{
-			alert("username exists, please try agian OR login");
+			echo "username exists, please try agian OR login";
 			//location.href='?c=Login&a=Login';
 		}
 		
