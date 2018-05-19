@@ -10,7 +10,6 @@ class LoginController extends Controller
     }
 	public function userLogin(){
 		$username = $_POST["username"];
-		//echo $username;
 		$password = $_POST["password"];
 		$email = $_POST["email"];
 		$phone = $_POST["phone"];
@@ -18,16 +17,15 @@ class LoginController extends Controller
 		
 		$LoginModel = new LoginModel();
 		
-		$checkuser = $LoginModel->check('user_info', 'usernmae', $username);
+		$checkuser = $LoginModel->search('user_info', 'usernmae', $username);
 		//$userJson = json_encode($checkuser);
 		//$checkEx = strlen($userJson);
 		if($checkuser == 0){
 			echo "username does not exits, please check your username or register a new account.";
 		}else{
-			$checkpass = $LoginModel->checPassword('user_info', 'password','username', $username)
-			//checkPassword($table,$one,$key, $value)
-			//$sql = "SELECT $one FROM $table WHERE $key = '$value'";
-			if ($checkpass == $password){
+			$checkpass = $LoginModel->checkPassword('user_info',$username,$password);
+			echo $checkpass;
+			if ($checkpass != null){
 				echo "success!";
 			}else{
 				echo "username or password incorrect, please try again!";
