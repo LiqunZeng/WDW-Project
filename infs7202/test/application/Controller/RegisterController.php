@@ -6,18 +6,18 @@ require_once "application/Model/RegisterModel.php";
 class RegisterController extends Controller
 {
 
-	public function UserRegister(){
-		$username = $_POST["username"];
-		$password = $_POST["password"];
-		$email = $_POST["email"];
-		$phone = $_POST["phone"];
-		$gender = $_POST["gender"];
+	public function UserRegister($username, $password, $email,$phone,$gender){
+		//$username = $_POST["username"];
+		//$password = $_POST["password"];
+		//$email = $_POST["email"];
+		//$phone = $_POST["phone"];
+		//$gender = $_POST["gender"];
 		
 		$RegisterModel = new RegisterModel();
 		
 		$checkuser = $RegisterModel->search('user_info', 'usernmae', $username);
 		$checkExits = sizeof($userJson);
-		echo '1';
+		//echo '1';
 		//var $user = echo $userJson;
 		if($checkExits==0){
 			$value = $RegisterModel->add('user_info', 'username, password, email, phone, gender', $username,$password,$email,$phone,$gender);
