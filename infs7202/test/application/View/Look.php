@@ -13,7 +13,7 @@
     <!-- Optional theme -->
     <link href="Public/css/bootstrap-theme.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="Public/css/style.css">
-    <link rel="stylesheet" href="Public/css/magnific-popup.css">
+    <!--link rel="stylesheet" href="css/magnific-popup.css"-->
   </head>
 
   <body>
@@ -28,7 +28,7 @@ $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
 //error reporting
-error_reporting(0);
+//error_reporting(0);
 
 
 //text search
@@ -64,6 +64,41 @@ $postAccessories = $_POST['accessories'];
 $postShowAll = $_POST['showAll'];
 $postSearch = $_POST['search'];
 
+
+
+
+//click add to cart
+if(isset($_POST['product_name'])){
+	$postProductName = $_POST['product_name'];
+	
+	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart` WHERE product_name = '{$postProductName}'");
+	$selectFromCart -> execute();
+	$selectedProduct = $selectFromCart->fetchAll();
+	
+	echo sizeof($selectedProduct);
+	
+	if(sizeof($selectedProduct)===0){
+		$add = 1;
+		$username = 'testuser';
+		$shopid = md5(time().mt_rand());
+		$addToCart = $dbh->prepare("INSERT INTO `shopping_cart` (product_name, username, shopid, quantity) VALUES (:product_name, :username, :shopid, :quantity)");
+		//INSERT INTO user_info (username, password, email, phone, gender) 
+		//VALUES (:username, :password, :email, :phone, :gender)"
+		$addToCart->bindParam(':product_name', $postProductName);
+		$addToCart->bindParam(':username', $username);
+		$addToCart->bindParam(':shopid', $shopid);
+		$addToCart->bindParam(':quantity', $add);
+		$addToCart->execute();
+	}else{
+		$addProductQuantity = $selectedProduct[0]["quantity"] + 1;
+		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$addProductQuantity}' WHERE product_name = '{$postProductName}'");
+		$updateCart->execute();
+	}
+	
+
+}
+
+
 ?>
   
     <!-- Fixed navbar MISS one navbar-deafult-->
@@ -77,7 +112,7 @@ $postSearch = $_POST['search'];
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="img/logo2.png" class="img-responsive" alt="logo image" id="brand-image"></a> 
+          <a class="navbar-brand" href="#"><img src="Public/img/logo2.png" class="img-responsive" alt="logo image" id="brand-image"></a> 
           <!--<a class="navbar-brand" href="#">Wedding Stylish</a> 
           <img src="img/Logo.png" class="img-responsive" alt="Responsive image" id="navImg">
           -->
@@ -88,11 +123,11 @@ $postSearch = $_POST['search'];
              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?c=ShoppingCart&a=ShoppingCart">ShoppingCart</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="login.html">Login</a></li>
-            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
+            <li><a href="?c=login&a=login">Login</a></li>
+            <li class="active"><a href="?c=Register&a=Register">Register</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -160,9 +195,10 @@ if($postShoes==null && $postDress==null && $postAccessories==null && $postSearch
                 </div>
 
                 <div class="modal-body">
-                  <img class="img-fluid img-thumbnail" src="img/thumbnails/1.jpg" alt="no image">
+                  <img class="img-fluid img-thumbnail" src="Public/img/thumbnails/1.jpg" alt="no image">
                 </div>
                 <div class="modal-footer">
+				   
                   <h3>Price:' . $product[$i]["price"].'  这里有问题！！**i is equal to:'. $i . '</h3> 
 				  <h4>Describetion:' . $product[$i]["product_dsc"] . ' </h4>
                   <button class="btn btn-warning btn-md js-scroll-trigger">add to ShoppingCart</button>
@@ -212,13 +248,18 @@ if($postShoes==null && $postDress==null && $postAccessories==null && $postSearch
 	
 }else if($postDress !=null){
 	for($i=0; $i < sizeof($dress); $i++){
+		echo $_POST['product_name'];
 				echo '
+
 	<!--Look with modal -->
+		<form method = "POST" action="#">
         <div class="col-lg-3 col-md-4 col-xs-6 thum">
+	<button class="btn btn-warning btn-md type="submit">Add to the cart</button>
           <a class="d-block mb-4 h-100" data-toggle="modal" data-target="#loginModal">
             <img class="img-fluid img-thumbnail" src='. $dress[$i]["path"] .' alt="No image">
-            <p>' . $dress[$i]["product_name"] . '</p>
-            <button class="btn btn-warning btn-md js-scroll-trigger">add to ShoppingCart</button>
+            <input name="product_name" style = "border:none;" value="'. $dress[$i]["product_name"] . '" >
+            <button class="btn btn-warning btn-md js-scroll-trigger">Show Detail</button>
+            
           </a>
         </div>
         <div class="modal fade" role="dialog" id="loginModal">
@@ -235,15 +276,18 @@ if($postShoes==null && $postDress==null && $postAccessories==null && $postSearch
                 <div class="modal-footer">
                   <h3>Price:' . $dress[$i]["price"] . '</h3>
 				  <h4>Describetion:' . $dress[$i]["product_dsc"] . ' </h4>
-                  <button class="btn btn-warning btn-md js-scroll-trigger">add to ShoppingCart</button>
+                  <button class="btn btn-warning btn-md js-scroll-trigger" type="submit">add to ShoppingCart</button>
                 </div>
               </div>      
           </div>
+
         </div>
+				</form>
 	<!--Look with modal -->';
 	}	
 }else if($postAccessories !=null){
 	for($i=0; $i < sizeof($accessories); $i++){
+		
 				echo '
 	<!--Look with modal -->
         <div class="col-lg-3 col-md-4 col-xs-6 thum">
@@ -313,7 +357,7 @@ if($postShoes==null && $postDress==null && $postAccessories==null && $postSearch
 	<!--Look with modal -->
         <div class="col-lg-3 col-md-4 col-xs-6 thum">
           <a class="d-block mb-4 h-100" data-toggle="modal" data-target="#loginModal">
-            <img class="img-fluid img-thumbnail" src='. $product[$i]["path"] .' alt="No image">
+            <img class="img-fluid img-thumbnail" src='.$product[$i]["path"] .' alt="No image">
             <p>' . $product[$i]["product_name"] . '</p>
             <button class="btn btn-warning btn-md js-scroll-trigger">add to ShoppingCart</button>
           </a>
