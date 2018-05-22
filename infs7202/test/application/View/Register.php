@@ -17,45 +17,7 @@
   </head>
 
   <body>
-  
-  <?php
-//原本的register.php, 亲测能用
-$dbms='mysql';
-$host='localhost';
-$dbName='infs3202';
-$user='root';
-$pass='';
-$dsn="$dbms:host=$host;dbname=$dbName";
-$dbh = new PDO($dsn, $user, $pass);
 
-$username = $_POST["username"];
-$password = $_POST["password"];
-$email = $_POST["email"];
-$phone = $_POST["phone"];
-$gender = $_POST["gender"];
-
-if(isset($_POST['username'])){
-$check = $dbh->prepare("SELECT * FROM `user_info` WHERE username ='{$username}'");
-$check -> execute();
-$user = $check->fetchAll();
-//$userJson = json_encode($user);
-
-	if(sizeof($user)==0){
-		$st = $dbh->prepare("INSERT INTO user_info (username, password, email, phone, gender) VALUES (:username, :password, :email, :phone, :gender)");
-
-		$st->bindParam(':username', $username);
-		$st->bindParam(':password', $password);
-		$st->bindParam(':email', $email);
-		$st->bindParam(':phone', $phone);
-		$st->bindParam(':gender', $gender);
-
-		$st->execute();
-	}else{
-		echo 'user exits';
-	}
-}
-
-?>
 
     <!-- Fixed navbar MISS one navbar-deafult-->
     <nav class="navbar navbar-fixed-top container-fluid" id="mainNav">
@@ -91,7 +53,7 @@ $user = $check->fetchAll();
 <div class="register text-center fieldset col-centered">
   <div class="row">
     <div class="form-group col-md-10 form1"><!-- here is 10 -->
-      <form role="form" class="form-horizontal" data-toggle="validator" method = "POST" action = "#">
+      <form role="form" class="form-horizontal" data-toggle="validator" method = "POST" action = "?c=Register&a=Register">
         <div class="row">
           <fieldset class="col-md-offset-5"><!--  5 is the center-->
             <legend class="col-md-8">Register</legend>

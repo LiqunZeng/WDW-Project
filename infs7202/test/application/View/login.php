@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['user']))header("Location:Look.php");
+if(isset($_SESSION['user']))header("?c=Look&a=Look");
 ?>
 
 <!DOCTYPE html>
@@ -22,70 +22,7 @@ if(isset($_SESSION['user']))header("Location:Look.php");
   </head>
 
   <body>
-  <?php
-//原本的login.php, 亲测能用
-$name=$_POST['username'];
-$password=$_POST['password'];
-$passwordJson = json_encode($password);
-
-$dbms='mysql';
-$host='localhost';
-$dbName='infs3202';
-$user='root';
-$pass='';
-$dsn="$dbms:host=$host;dbname=$dbName";
-$dbh = new PDO($dsn, $user, $pass);
-
-
-if(isset($_POST['submit'])){
-		$username = $_POST["username"];
-		$password = $_POST["password"];
-		//$email = $_POST["email"];
-		//$phone = $_POST["phone"];
-		//$gender = $_POST["gender"];
-
-$st = $dbh->prepare("SELECT * FROM `user_info` WHERE username='{$name}' AND password = '{$password}'");
-$st->execute();
-$user = $st->fetchAll();
-
-	if(sizeof($user)!=0){
-			session_start();
-			echo 'success';
-	}else{
-		echo'fail';
-	}
-}
-
-
-?>
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <script>
-      var user = <?php
-          echo $userJson;
-      ?>;
-      var password = <?php echo $passwordJson ?>;
-      console.log(password);
-	  if(user.length==0){
-		  alert("Invalid username, please try again");
-		  location.href='../View/login.html';
-	  }
-      else if(user[0][1] === password){
-        alert("success!");
-		location.href='../View/Look.html';
-      }else{
-        alert("fail!");
-        location.href='../View/login.html';
-      }
-    </script>
-  </body>
-</html>
+  
 
 
     <!-- Fixed navbar MISS one navbar-deafult-->
@@ -122,7 +59,7 @@ $user = $st->fetchAll();
 <div class="register text-center fieldset col-centered">
   <div class="row">
     <div class="form-group col-md-10 form1"><!-- here is 10 -->
-      <form role="form" class="form-horizontal" data-toggle="validator" method = "POST" action = "#">
+      <form role="form" class="form-horizontal" data-toggle="validator" method = "POST" action = "?c=login&a=login">
         <div class="row">
           <fieldset class="col-md-offset-5"><!--  5 is the center-->
             <legend class="col-md-8" style="font-family: 'Playball', cursive; font-weight: bold; font-size: xx-large;">Login</legend>

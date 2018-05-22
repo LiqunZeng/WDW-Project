@@ -9,10 +9,61 @@ class LoginController extends Controller
 {	
     public function login(){
         $this->display();
-		$this->userLogin();
+		  //<?php
+//原本的login.php, 亲测能用
+$name=$_POST['username'];
+$password=$_POST['password'];
+$passwordJson = json_encode($password);
+
+$dbms='mysql';
+$host='localhost';
+$dbName='infs3202';
+$user='root';
+$pass='';
+$dsn="$dbms:host=$host;dbname=$dbName";
+$dbh = new PDO($dsn, $user, $pass);
+
+
+if(isset($_POST['submit'])){
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		//$email = $_POST["email"];
+		//$phone = $_POST["phone"];
+		//$gender = $_POST["gender"];
+
+$st = $dbh->prepare("SELECT * FROM `user_info` WHERE username='{$name}' AND password = '{$password}'");
+$st->execute();
+$user = $st->fetchAll();
+
+	if(sizeof($user)!=0){
+			session_start();
+			$userinfo = new UserModel($username);
+			$_SESSION['user'] = $userinfo;
+			echo 'success'.$username;
+			$flag = 1;
+	}else{
+		$flag = 0;
+		echo '<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+			alert("incorrect username or password, please try again!");
+
+    </script>
+  </body>
+</html>';
+	}
+}
+
+
+		//$this->userLogin();
     }
 	
-	function userlogin($username, $password){
+	/*function userlogin($username, $password){
 
 			//1.check user	
 		$LoginModel = new LoginModel();
@@ -44,7 +95,6 @@ class LoginController extends Controller
 	function userLogout(){
 		session_start();
 		session_destroy();
-	}
+	}*/
 }
 ?>
-
