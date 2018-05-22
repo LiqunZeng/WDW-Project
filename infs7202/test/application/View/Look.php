@@ -254,12 +254,12 @@ if($postShoes==null && $postDress==null && $postAccessories==null && $postSearch
 	<!--Look with modal -->
 		<form method = "POST" action="#">
         <div class="col-lg-3 col-md-4 col-xs-6 thum">
-	<button class="btn btn-warning btn-md type="submit">Add to the cart</button>
-          <a class="d-block mb-4 h-100" data-toggle="modal" data-target="#loginModal">
+		
+          <a class="d-block mb-4 h-100" >
             <img class="img-fluid img-thumbnail" src='. $dress[$i]["path"] .' alt="No image">
             <input name="product_name" style = "border:none;" value="'. $dress[$i]["product_name"] . '" >
-            <button class="btn btn-warning btn-md js-scroll-trigger">Show Detail</button>
             
+            <button class="btn btn-warning btn-md js-scroll-trigger" type="submit">Add to the cart</button>
           </a>
         </div>
         <div class="modal fade" role="dialog" id="loginModal">
