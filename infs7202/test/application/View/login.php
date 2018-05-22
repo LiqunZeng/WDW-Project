@@ -42,7 +42,7 @@ if(isset($_SESSION['user']))header("?c=Look&a=Look");
         </div>
         <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav ml-auto">
-            <li class="active"><a href="index.html">Home</a></li>
+            <li class="active"><a href="?c=index&a=index">Home</a></li>
              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?c=Look&a=Look">Look</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>

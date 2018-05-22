@@ -31,6 +31,11 @@ $dbh = new PDO($dsn, $user, $pass);
 //error_reporting(0);
 
 
+		//get user
+		  session_start();
+		  $loginUser=$_SESSION['user'];
+
+
 //text search
 $check = $dbh->prepare("SELECT * FROM `product_info`");
 $check -> execute();
@@ -68,10 +73,12 @@ $postSearch = $_POST['search'];
 
 
 //click add to cart
+$username = $loginUser;
 if(isset($_POST['product_name'])){
+	
 	$postProductName = $_POST['product_name'];
 	
-	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart` WHERE product_name = '{$postProductName}'");
+	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart` WHERE product_name = '{$postProductName}' AND username = '{$username}'");
 	$selectFromCart -> execute();
 	$selectedProduct = $selectFromCart->fetchAll();
 	
@@ -79,7 +86,7 @@ if(isset($_POST['product_name'])){
 	
 	if(sizeof($selectedProduct)===0){
 		$add = 1;
-		$username = 'testuser';
+
 		$shopid = md5(time().mt_rand());
 		$addToCart = $dbh->prepare("INSERT INTO `shopping_cart` (product_name, username, shopid, quantity) VALUES (:product_name, :username, :shopid, :quantity)");
 		//INSERT INTO user_info (username, password, email, phone, gender) 
@@ -91,7 +98,7 @@ if(isset($_POST['product_name'])){
 		$addToCart->execute();
 	}else{
 		$addProductQuantity = $selectedProduct[0]["quantity"] + 1;
-		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$addProductQuantity}' WHERE product_name = '{$postProductName}'");
+		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$addProductQuantity}' WHERE product_name = '{$postProductName}' AND username = '{$username}'");
 		$updateCart->execute();
 	}
 	
@@ -119,16 +126,39 @@ if(isset($_POST['product_name'])){
         </div>
         <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav ml-auto">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="?c=index&a=index">Home</a></li>
              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?c=ShoppingCart&a=ShoppingCart">ShoppingCart</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="?c=login&a=login">Login</a></li>
-            <li class="active"><a href="?c=Register&a=Register">Register</a></li>
-          </ul>
+		  <?php
+
+		  if(isset($_SESSION['user'])){
+			  //user login
+
+			  echo '
+			<ul class="nav navbar-nav navbar-right">
+            <li><a>Hi, '.$loginUser.'</a></li>
+            <li class="active"><a href="?c=logout&a=logout">Logout</a></li>
+			</ul>';
+		  }else{
+			echo '<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+			location.href="?c=login&a=login";
+    </script>
+  </body>
+</html>';
+		  }
+		  ?>
+		  
+
         </div><!--/.nav-collapse -->
       </div>
     </nav>
