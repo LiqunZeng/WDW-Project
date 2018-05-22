@@ -36,22 +36,26 @@ $pass='';
 $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
+
+		  session_start();
+		  $loginUser=$_SESSION['user'];
+
+
 //delete
 	if(isset($_POST['product_name'])){
 		$deleteProduct = $_POST['product_name'];
-		$deleteFromCart = $dbh->prepare("DELETE FROM `shopping_cart` WHERE product_name = '{$deleteProduct}'");
+		$deleteFromCart = $dbh->prepare("DELETE FROM `shopping_cart` WHERE product_name = '{$deleteProduct}' AND username = '{$loginUser}'");
 		$deleteFromCart -> execute();
 		//$deleteFromCart = $selectFromCart->fetchAll();
 	}
 	
 	
-	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name");
+	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name AND username = '{$loginUser}'");
 	$selectFromCart -> execute();
 	$selectedProduct = $selectFromCart->fetchAll();
 
 	//(sizeof($selectedProduct)===0)
-
-
+	
 
 
 ?>  
@@ -74,15 +78,36 @@ $dbh = new PDO($dsn, $user, $pass);
         <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav ml-auto">
             <li class="active"><a href="index.html">Home</a></li>
-             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
+             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?c=Look&a=Look">Look</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="login.html">Login</a></li>
-            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
-          </ul>
+		  <?php
+
+		  if(isset($_SESSION['user'])){
+			  //user login
+
+			  echo '
+			<ul class="nav navbar-nav navbar-right">
+            <li><a>Hi, '.$loginUser.'</a></li>
+            <li class="active"><a href="?c=logout&a=logout">Logout</a></li>
+			</ul>';
+		  }else{
+			echo '<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+			location.href="?c=login&a=login";
+    </script>
+  </body>
+</html>';
+		  }
+		  ?>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -113,35 +138,62 @@ $dbh = new PDO($dsn, $user, $pass);
           <tbody>
 		  
 		  <?php
+		  
+		  $totalPrice = 0;
 		  // show all selected product;
 		  	for ($i=0; $i<sizeof($selectedProduct); $i++){
 		echo '
+			
 		      <tr>
-			<form method = "POST" action = "#">
+			  <form method = "POST" action = "#">
               <td data-th="Product">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-10 hidden-xs">
                     <img heigh="100%" width="100%" src='. $selectedProduct[$i]["path"] .' alt="..." class="img-fluid"/>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-2">
- 					<input readonly="readonly" name="product_name" style = "border:none;" value="'.$selectedProduct[$i]["product_name"].'" >
-                 
+					<input id="'.$i.'name" readonly="readonly" name="product_name" style = "border:none;" value="'.$selectedProduct[$i]["product_name"].'" >
+                    
+					<script>document.getElementById("'.$i.'name").style.display = "none";</script>
+					
+					<p>'.$selectedProduct[$i]["product_name"].' </p>
+                    
                   </div>
                 </div>
               </td>
-              <td data-th="Price"> <p class="">'.$selectedProduct[$i]["price"].'</p></td>
+              <td data-th="Price"> <p class="" id="'.$i.'price">'.$selectedProduct[$i]["price"].'</p></td>
               <td data-th="Quantity">
-                <p> '.$selectedProduct[$i]["quantity"].'</p>
-              </td>
-              <td data-th="Subtotal" class="text-center">'.$selectedProduct[$i]["price"].'</td>
-              <td class="actions" data-th="">
+				
+                <p id="'.$i.'quantity" >'.$selectedProduct[$i]["quantity"].'</p>
+			 
+			  </td>
+			  
+					
+              <td id = "'.$i.'subtotal" data-th="Subtotal" class="text-center">'.$selectedProduct[$i]["price"].'</td>
+			  <script>document.getElementById("'.$i.'subtotal").innerHTML = document.getElementById("'.$i.'price").innerHTML * 
+					document.getElementById("'.$i.'quantity").innerHTML;</script>
+			              <td class="actions" data-th="">
 				<button class="btn btn-danger btn-sm" type = "submit"><i class="fa fa-trash-o">Delete</i></button>    
               </td>
 			 </form>
             </tr>
- 
-		
+			
+			
+			<script>
+
+				
+				function myfunction() {
+					console.log("yes");
+					document.getElementById("'.$i.'subtotal").innerHTML = document.getElementById("'.$i.'price").innerHTML * 
+					document.getElementById("'.$i.'quantity").value;
+				}
+			</script>
+
 		';
+		
+				
+		$totalPrice = ($selectedProduct[$i]["price"] * $selectedProduct[$i]["quantity"])+$totalPrice;
+		
 		
 	}?>
 		  
@@ -162,7 +214,7 @@ $dbh = new PDO($dsn, $user, $pass);
 
               <td colspan="2" class="hidden-xs"></td>
              
-              <td class="text-center"><a href="orderList.html" class="btn btn-warning btn-block">Check Order<i class="fa fa-angle-right"></i></a></td>
+              <td class="text-center"><a href="?c=checkOrder&a=checkOrder" class="btn btn-warning btn-block">Check Order<i class="fa fa-angle-right"></i></a></td>
               <td><a href="index.html" class="btn btn-success btn-block hidden-xs">Continue Shopping<i class="fa fa-angle-right"></i></a></td>
             </tr>
           </tfoot>
@@ -183,7 +235,10 @@ $dbh = new PDO($dsn, $user, $pass);
           
           <div class="summary-total">
           <div class="total-title" style="font-size:22px;">Total: </div>
-          <div class="total-value final-value" style="font-size:22px;">2000</div>
+		  <?php
+			echo '<div class="total-value final-value" style="font-size:22px;"> '.$totalPrice.' </div>
+			';
+		  ?>
         </div>
         </div>
         <div class="summary-delivery">
@@ -198,7 +253,19 @@ $dbh = new PDO($dsn, $user, $pass);
 			<div id="paypal-button"></div>
 
   <script>
-    var price='100.00';
+    function delCart(){
+		
+	var d = new Date();
+    var order_number = d.getFullYear() + (d.getMonth()+1) + d.getDate() + Math.floor((Math.random() * 1000) + 1);
+		<?php 
+		
+
+				echo 'location.href="?c=checkOrder&a=checkOrder";';
+		
+		?>
+	}
+	
+    var price=<?php echo $totalPrice;	?>;
     paypal.Button.render({
       env: 'sandbox', // Or 'sandbox',
 
@@ -228,9 +295,8 @@ $dbh = new PDO($dsn, $user, $pass);
 
       onAuthorize: function(data, actions) {
         return actions.payment.execute().then(function(payment) {
-
-                // The payment is complete!
-                // You can now show a confirmation message to the customer
+				delCart();
+				
             });
       },
 
@@ -339,7 +405,7 @@ $dbh = new PDO($dsn, $user, $pass);
         <span>1234567890</span>
       </div>
       <div class="modal-footer">
-        <a href="orderList.html" class="btn btn-default btn-sm">Check Order</a>  
+        <a href="?c=checkOrder&a=checkOrder" class="btn btn-default btn-sm">Check Order</a>  
       </div>
     </div>
 

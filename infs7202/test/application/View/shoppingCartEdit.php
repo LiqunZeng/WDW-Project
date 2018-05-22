@@ -36,20 +36,36 @@ $pass='';
 $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
+		//get user
+		  session_start();
+		  $loginUser=$_SESSION['user'];
+
 
 	if(isset($_POST['product_name'])){
 		$ProductName = $_POST['product_name'];
 		$ProductQuantity = $_POST['quantity'];
-		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$ProductQuantity}' WHERE product_name = '{$ProductName}'");
+		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$ProductQuantity}' WHERE product_name = '{$ProductName}' AND username = '{$loginUser}'");
 		$updateCart->execute();
-	}else{
-		echo 'no!!!!!';
+		
+		echo '<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+			location.href="?c=shoppingCart&a=shoppingCart";
+    </script>
+  </body>
+</html>';
 	}
 	
-	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name");
+	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name AND username = '{$loginUser}'" );
 	$selectFromCart -> execute();
 	$selectedProduct = $selectFromCart->fetchAll();
 
+	
 	//(sizeof($selectedProduct)===0)
 
 	//edit quantity
@@ -80,10 +96,31 @@ $dbh = new PDO($dsn, $user, $pass);
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="login.html">Login</a></li>
-            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
-          </ul>
+		  <?php
+
+		  if(isset($_SESSION['user'])){
+			  //user login
+
+			  echo '
+			<ul class="nav navbar-nav navbar-right">
+            <li><a>Hi, '.$loginUser.'</a></li>
+            <li class="active"><a href="?c=logout&a=logout">Logout</a></li>
+			</ul>';
+		  }else{
+			echo '<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+			location.href="?c=login&a=login";
+    </script>
+  </body>
+</html>';
+		  }
+		  ?>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -113,9 +150,11 @@ $dbh = new PDO($dsn, $user, $pass);
           <tbody>
 		  
 		  <?php
+		  $totalPrice = 0;
 		  // show all selected product;
 		  	for ($i=0; $i<sizeof($selectedProduct); $i++){
 		echo '
+			
 		      <tr>
 			  <form method = "POST" action = "#">
               <td data-th="Product">
@@ -124,17 +163,21 @@ $dbh = new PDO($dsn, $user, $pass);
                     <img heigh="100%" width="100%" src='. $selectedProduct[$i]["path"] .' alt="..." class="img-fluid"/>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-2">
-					<input name="product_name" style = "border:none;" value="'.$selectedProduct[$i]["product_name"].'" >
+					<input readonly="readonly" name="product_name" style = "border:none;" value="'.$selectedProduct[$i]["product_name"].'" >
                     
                   </div>
                 </div>
               </td>
-              <td data-th="Price"> <p class="">'.$selectedProduct[$i]["price"].'</p></td>
+              <td data-th="Price"> <p class="" id="'.$i.'price">'.$selectedProduct[$i]["price"].'</p></td>
               <td data-th="Quantity">
-                <input type="number" name = "quantity" class="form-control text-center" value="'.$selectedProduct[$i]["quantity"].'" min="1">
+                <input id="'.$i.'quantity" type="number" onchange="myfunction()" name = "quantity" class="form-control text-center" value="'.$selectedProduct[$i]["quantity"].'" min="1">
               </td>
-              <td data-th="Subtotal" class="text-center">'.$selectedProduct[$i]["price"].'</td>
 			  
+			  
+					
+              <td id = "'.$i.'subtotal" data-th="Subtotal" class="text-center">'.$selectedProduct[$i]["price"].'</td>
+			  <script>document.getElementById("'.$i.'subtotal").innerHTML = document.getElementById("'.$i.'price").innerHTML * 
+					document.getElementById("'.$i.'quantity").value;</script>
 
               <td class="actions" data-th="">
 					<button class="btn btn-danger btn-sm" type = "submit" name = "save" 
@@ -143,7 +186,18 @@ $dbh = new PDO($dsn, $user, $pass);
               </td>
 			 </form>
             </tr>
-		';
+
+			<script>
+				
+				function myfunction() {
+					console.log("yes");
+					document.getElementById("'.$i.'subtotal").innerHTML = document.getElementById("'.$i.'price").innerHTML * 
+					document.getElementById("'.$i.'quantity").value;
+				}
+
+			</script>
+			';
+
 	}?>
 		  
                
@@ -178,7 +232,9 @@ $dbh = new PDO($dsn, $user, $pass);
           
           <div class="summary-total">
           <div class="total-title" style="font-size:22px;">Total: </div>
-          <div class="total-value final-value" style="font-size:22px;">2000</div>
+		  
+
+
         </div>
         </div>
         <div class="summary-delivery">
