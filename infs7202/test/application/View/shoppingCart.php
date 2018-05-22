@@ -36,11 +36,6 @@ $pass='';
 $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
-	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name");
-	$selectFromCart -> execute();
-	$selectedProduct = $selectFromCart->fetchAll();
-
-	//(sizeof($selectedProduct)===0)
 //delete
 	if(isset($_POST['product_name'])){
 		$deleteProduct = $_POST['product_name'];
@@ -48,6 +43,15 @@ $dbh = new PDO($dsn, $user, $pass);
 		$deleteFromCart -> execute();
 		//$deleteFromCart = $selectFromCart->fetchAll();
 	}
+	
+	
+	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name");
+	$selectFromCart -> execute();
+	$selectedProduct = $selectFromCart->fetchAll();
+
+	//(sizeof($selectedProduct)===0)
+
+
 
 
 ?>  
@@ -120,8 +124,8 @@ $dbh = new PDO($dsn, $user, $pass);
                     <img heigh="100%" width="100%" src='. $selectedProduct[$i]["path"] .' alt="..." class="img-fluid"/>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-2">
-                    <p class="">'.$selectedProduct[$i]["product_name"].'</p>
-                    
+ 					<input readonly="readonly" name="product_name" style = "border:none;" value="'.$selectedProduct[$i]["product_name"].'" >
+                 
                   </div>
                 </div>
               </td>
@@ -131,7 +135,7 @@ $dbh = new PDO($dsn, $user, $pass);
               </td>
               <td data-th="Subtotal" class="text-center">'.$selectedProduct[$i]["price"].'</td>
               <td class="actions" data-th="">
-
+				<button class="btn btn-danger btn-sm" type = "submit"><i class="fa fa-trash-o">Delete</i></button>    
               </td>
 			 </form>
             </tr>
@@ -294,9 +298,6 @@ $dbh = new PDO($dsn, $user, $pass);
 
                    
                   </div>
-
-
-                   
                     <div class="form-group">
                         <label for="require">Other Requirement</label>
                         <textarea class="form-control" id="require" rows="3"></textarea>

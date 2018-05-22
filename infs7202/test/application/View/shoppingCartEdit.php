@@ -37,11 +37,13 @@ $dsn="$dbms:host=$host;dbname=$dbName";
 $dbh = new PDO($dsn, $user, $pass);
 
 
-	if(isset($_POST['quantity'])){
+	if(isset($_POST['product_name'])){
 		$ProductName = $_POST['product_name'];
 		$ProductQuantity = $_POST['quantity'];
 		$updateCart = $dbh->prepare("UPDATE `shopping_cart` SET quantity ='{$ProductQuantity}' WHERE product_name = '{$ProductName}'");
 		$updateCart->execute();
+	}else{
+		echo 'no!!!!!';
 	}
 	
 	$selectFromCart = $dbh->prepare("SELECT * FROM `shopping_cart`, `product_info` WHERE `shopping_cart`.product_name = `product_info`.product_name");
@@ -94,9 +96,7 @@ $dbh = new PDO($dsn, $user, $pass);
         <div class="shopping-title">
           <h1>User Name</h1>
           <h3>Shopping Cart</h3>
-			<button class="btn btn-danger btn-sm" type = "submit" name = "save" value = "saveitem"
-			onclick = "location.href='?c=ShoppingCart&a=ShoppingCart'"><i class="fa fa-trash-o">Save</i></button>
-		
+	
       </div>
         <div class="col-12 col-md-8 one">
           <table class="table table-hover table-condensed">
@@ -137,12 +137,13 @@ $dbh = new PDO($dsn, $user, $pass);
 			  
 
               <td class="actions" data-th="">
-		
+					<button class="btn btn-danger btn-sm" type = "submit" name = "save" 
+					value = "saveitem" onclick = "location.href='. '?c=ShoppingCart&a=ShoppingCart' .'"><i class="fa fa-trash-o">Save</i></button>
+	
               </td>
 			 </form>
             </tr>
 		';
-		
 	}?>
 		  
                
@@ -151,19 +152,13 @@ $dbh = new PDO($dsn, $user, $pass);
             <tr>
               <td>
                 <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Pre</a></li>
-                    <li class="page-item"><a class="page-link hidden-xs" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link hidden-xs" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                  </ul>
                 </nav>
               </td>
 
               <td colspan="2" class="hidden-xs"></td>
              
               <td class="text-center"><a href="orderList.html" class="btn btn-warning btn-block">Check Order<i class="fa fa-angle-right"></i></a></td>
-              <td><a href="index.html" class="btn btn-success btn-block hidden-xs">Continue Shopping<i class="fa fa-angle-right"></i></a></td>
+              <td><a href="?c=Look&a=Look"" class="btn btn-success btn-block hidden-xs">Continue Shopping<i class="fa fa-angle-right"></i></a></td>
             </tr>
           </tfoot>
 
