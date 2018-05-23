@@ -840,7 +840,6 @@ User Profile
  
 }
 
-
 .profileImg {
   max-width: 50%!important;
 }
@@ -882,6 +881,37 @@ User Profile
 .userProfile-hr {
   max-width:100%;
 }
+
+
+
+/*Items Page*/
+
+.itemsLink {
+  text-decoration: none;
+}
+
+.my-4 a:hover {
+  text-decoration: none;
+}
+
+.items {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  .items {
+    padding-top: 56px;
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
 
