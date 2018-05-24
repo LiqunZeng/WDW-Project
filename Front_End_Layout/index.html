@@ -36,14 +36,14 @@
         <div id="navbar" class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav ml-auto">
             <li class="active"><a href="#">Home</a></li>
-             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="Look.html">Look</a></li>
+             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Look</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Blog</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">ShoppingChat</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="?c=login&a=login">Login</a></li>
-            <li class="active"><a href="?c=Register&a=Register">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li class="active"><a href="TwoTypesOfRegister.html">Register</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -221,7 +221,28 @@
             </p>
           </div>
         </div>
-      </div>
+ </div>
+
+<div class="seperator"></div>
+<!--          Contact part             -->
+    <section class="text-center" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center contact">
+            <h2 class="section-heading" style="font-family: 'Playball', cursive; font-weight: bold; font-size: xx-large;">Location</h2>
+            <hr class="my-4">
+            
+          </div>
+        </div>
+        <div class="row">
+          
+          <div class="col-lg-8 mb-4">
+          <!-- Embedded Google Map -->
+         <iframe class="iframe" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAQESkBnJ8S_OK7Mg8IBTjD6HmCb6GcOyw&zoom=17&center=-27.4977%2C153.0179" allowfullscreen></iframe>  
+        </div>
+       
+ </div>
+
       <br>
 
       <div class="footer">
@@ -233,6 +254,16 @@
 <script src="js/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+<script>
+function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.12),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+</script>
 
 
 </script>
